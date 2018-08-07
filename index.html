@@ -1,0 +1,134 @@
+<html>
+<body>
+
+<style>
+  #text{
+    text-align: center;
+  }
+  #dot{
+    margin-left: 40%;
+  }
+  #image{
+    position: relative;
+    width:500px;
+    margin: auto;
+  }
+  .w3-button{
+    border:none;
+    display:inline-block;
+    padding:8px 16px;
+    vertical-align:middle;
+    overflow:hidden;
+    text-decoration:none;
+    color:inherit;
+    background-color:inherit;
+    text-align:center;
+    cursor:pointer;
+    white-space:nowrap;
+    color:#000!important;
+    background-color:transparent!important;
+  }
+  .w3-display-left{
+    position:absolute;
+    top:50%;
+    left:0%;
+    transform:translate(0%,-50%);
+    -ms-transform:translate(-0%,-50%);
+  }
+  .w3-display-right{
+    position:absolute;
+    top:50%;
+    right:0%;
+    transform:translate(0%,-50%);
+    -ms-transform:translate(0%,-50%);
+  }
+  .demo{
+    cursor:pointer;
+    color:transparent;
+    height:13px;width:13px;padding:0;
+    display:inline-block;text-align:center;
+    border-radius:50%;border:1px solid #ccc;
+  }
+  .demo:hover{background-color:#fff}
+  .w3-white{background-color:#fff}
+</style>
+
+
+
+<div id="text"><p id="b"></p>
+<p id="a"></p></div>
+<div id="image">
+  <img class="myslides" id=img1 style="width:100%">
+  <img class="myslides" id=img2 style="width:100%">
+  <img class="myslides" id=img3 style="width:100%">
+  <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+  <button class="w3-button w3-display-right"id="right" onclick="plusDivs(1)">&#10095;</button><br>
+  <div id="dot">
+    <span class="demo" onclick="currentDiv(0)"></span>
+    <span class="demo" onclick="currentDiv(1)"></span>
+    <span class="demo" onclick="currentDiv(2)"></span>
+  </div>
+</div>
+
+
+
+<script>
+  var d,e,slideindex=0,myIndex = 0;
+  showDivs(slideindex);
+  carousel();
+  function carousel() {
+    setInterval(function(){plusDivs(1);}, 3000);
+  }
+  function currentDiv(n) {
+    showDivs(slideindex = n);
+  }
+  function plusDivs(n) {
+    showDivs(slideindex += n);
+  }
+  function showDivs(n) {
+    var i;
+    var x = document.getElementsByClassName("myslides");
+    var dots = document.getElementsByClassName("demo");
+    if (n == 3) {slideindex = 0}
+    if (n == -1) {slideindex = 2}
+    for (i = 0; i < 3; i++) {
+       x[i].style.display = "none";
+       dots[i].className = dots[i].className.replace(" w3-white", "");
+    }
+    x[slideindex].style.display = "block";
+    dots[slideindex].className += " w3-white";
+  }
+
+
+  var xhr = new XMLHttpRequest();
+  var json;
+  var img=[];
+  xhr.open('GET', "https://demo6835492.mockable.io/getPageInfo", true);
+  xhr.responseType = 'text';
+  xhr.onload = function() {
+    json=JSON.parse(xhr.response);
+    document.title=json.pageMetaTitle;
+    document.body.bgColor=json.pageBackgroundColor;
+    img=json.images;
+    display(json.titleText,json.titleColor,json.titleFontSize,json.descriptionText,json.descriptionColor,json.descriptionSize);
+    document.getElementById("img1").src=img[0];
+    document.getElementById("img2").src=img[1];
+    document.getElementById("img3").src=img[2];
+  };
+  xhr.send();
+  function display(text,colr,siz,bod,col,si) {
+    e=document.getElementById("b");
+    d=document.getElementById("a");
+    e.style.color=colr;
+    e.style.fontSize=siz;
+    e.style.fontWeight="900";
+    e.innerHTML=text;
+    d.style.color=col;
+    d.style.fontSize=si;
+    d.innerHTML+=bod;
+  }
+</script>
+
+
+</body>
+</html>
